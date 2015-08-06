@@ -41,3 +41,9 @@ modifyPom {
     }
   }
 }
+
+nexus {
+  sign = true
+  repositoryUrl = "${nexusUrl}/service/local/staging/deploy/maven2/"
+  snapshotRepositoryUrl = "${nexusUrl}/content/repositories/snapshots/"
+}
