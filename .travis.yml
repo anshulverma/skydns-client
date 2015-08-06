@@ -5,16 +5,18 @@ jdk:
 - oraclejdk8
 
 env:
-  matrix:
-  - TERM=dumb
+  global:
   - secure: oMG6Yu1WwbCZX6+iyLMw5lgOphKyo4gyUUMUFV30oGawDQGVU0oIeilkfcMDUMXAztUTuN3VGzcjk44YGan22hHvHtQM/gqpAqbLSuSmULfufn4y8IJZzy5DeiDsOzeFjZjBsevjkjil/k8qyi8rGGshQ/5xfT8z1N/5gE+fzict8giaCcYccUEQOHEWg8g6l2+9z5qqlUP/yFVaUoVNz2sYkuJao6FAVbOtSlwyPiy1TSTGcY+18LThI4WgEaMF5BXNL4OFtwpFirHvUWUkg7HYgMnuJrRlZrYaJsQlpY/6iF4PSXhE72XMtY4cU24eNtW9Gk3pM9n8SEp/IU+sJjryfzD3QLTtvKlxMthR8EwNr1beOCpe4tUteyFl1jO9WVwgYbeD2/pMTXapRjx/LSWtwvfGZq7iJTzrslTBZXFlFkDLf8lVxSv9D/KwDdiiNy/87IQuGgX577nVJuAa8VetK3c3E567a6zFNCBzlS5GG3HS/C63ECQ1Lid3O3xCERlBjfa08cpkGHqE9aAbbMI1hyO0ksKzFOuM25XDmlVn2wRDH+vMNQQorwyvwqN0PgmB39cECbh+l4GJ9/4vtOhpA/GWqZ4QzITQtZ2jDU3LUziWur1aeI4KCJH+7RQH/KxMUVtMVquIYomlgm56lKQvEq8OVrEVb8MG+YpF0Bo=
   - secure: EHgqSmzTZ0U6wXBIB5DCGXG/YOuM8yrql63ZtbWOhUS45Xz4+IBhlCD/TI4HbSL1+5+nSt3tQTAYYjDTktOwmscA/OXalIlkowhAKG5ceLVgF2hkAZAVCyw0HlHWqqGzZBNXiPsGpxKTH/s/Y0OIY+u7SmOkQepSdeBsYkndvMtYo4GXgYFpGmF1NLO7oEFMrVhBL4AqF/GX2OrCBw7us6ImZ8DE5Zo9wwTDCXqfRmzgrGOHmt6jsMCk5Xwq9AqssQwjCp+BvPWGx1tGxmiSCJGCN2V0B/yDGk51V/QgE1YcRSgjEnoyFTIJPRx2/NT2O+Oy9aCIqagm33LoVdnlDNljSeOxX1Qf3WVmxoTgrTDHG5TvwtWkDGNU0YjXgPdKgbomX7Qq1RIGyZ5drjQbAOujL8cilaZ2Y93BYdiLQn50Xgv+dw0IDjpt8NtWh1D5OYUCIsnuHJzn68gUgMZobD4sfv/IGG+b2BXpk5Go1XuETjXPbK7W/3MAl5J9dxm0agmiiPWEBvFGw+01XVs7jVB/T29yzMheJZEw4FJtHNqRpUWubj+pPgsIbUXOCkPbdsslNoyH+/rQZpiH0YaRqDMdu4QszEioC4ddoOGS5ty18/MqI3pjc2inqON9wdr7ZskrBkimf9lPRqmg4OgCO4/+0q287T+IgCTnQDpO/E8=
+  matrix:
+  - TERM=dumb
 
 before_install:
 - cp gradle.properties.ci gradle.properties
 
 script:
 - JAVA_OPTS="-Xmx384m -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=0 -noverify" ./gradlew check
+
 after_success:
 - "./gradlew coveralls uploadArchives -PnexusUsername='${SONATYPE_USERNAME}' -PnexusPassword='${SONATYPE_PASSWORD}'"
 
