@@ -36,7 +36,7 @@ dependencies {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-group = 'com.anshul.skydns'
+group = 'net.anshulverma.skydns'
 version.with {
   major = 0 // incompatible API changes
   minor = 0 // backwards-compatible additions

@@ -30,7 +30,7 @@ modifyPom {
 
     developers {
       developer {
-        id 'anshul'
+        id 'anshulverma'
         name 'Anshul Verma'
         email 'anshul.verma86@gmail.com'
         roles {

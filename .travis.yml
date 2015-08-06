@@ -2,23 +2,26 @@ language: java
 sudo: false
 
 jdk:
-  - oraclejdk8
+- oraclejdk8
 
 env:
- - TERM=dumb
+  matrix:
+  - TERM=dumb
+  global:
+    secure: ytO1+QWvatX74nHC2kc1+OCw2h0L6Sx5nc2oJtDucoAJUJlS/UEtaZip3xbiN5dQwwpNEG7zimwq+EOcy/QGTYy74h1JJF/RJ9qhv/qbhGWNUa6+SCytYvEXjL0ttN4zv7b78qJj7iLni18B6eCHYfw6hH9RFZATqsSOPRR12HmOcR7J/IzorvoK8cie8UtISzYE77aYDELnBbYlmn/KkQEbXryer2s5isvPHW20gRdJECgTzjhJM+4CeuuIAdKSJRhLWyouMtznjJi7su0rcGul9PUYrYFPvRoWyWlFnBLUnA/SzCaJPlmf/iJvs0scKFNau1R0vFjErJh0bBQcVKctd/gOgV9x37sIOZa1uq2/JiSQxl1M2UZY94RJGR4exZ+yUkf2IHvlmPJrnYKSYV/veBaUZAXxDlA+wQEy6CxfUPPcPov5veCCJFGzm/H4JXinuIGSXlkHOInnDwvkxIbGnp6u7wBmJLD8BQvIFP0zaR7vE26AJ1Uc58HM0jWwBt0sl+pFK58sHpspP2SahJm2PsLawWMWPGPcDt4tHCNgYQNWQB00H1mxCOKlLXleirp9nhdP46NQ/mH8DD/YxL1Dp6uG2aiQUgL2VV9G17eNyvhIdH6x6nBm/VPw+DG9Ulu71iZsRqY7fUwQzrvBRQe+hDw9QD92uizbnT+2D9A=
 
 before_install:
- - cp gradle.properties.ci gradle.properties
+- cp gradle.properties.ci gradle.properties
 
 script:
- - JAVA_OPTS="-Xmx384m -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=0 -noverify" ./gradlew check
+- JAVA_OPTS="-Xmx384m -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=0 -noverify" ./gradlew check
 
 after_success:
-- ./gradlew coveralls uploadArchives
+- "./gradlew coveralls uploadArchives -PnexusUsername='${SONATYPE_USERNAME}' -PnexusPassword='${SONATYPE_PASSWORD}'"
 
 matrix:
   fast_finish: true
 
 cache:
   directories:
-    - $HOME/.gradle
+  - "$HOME/.gradle"
