@@ -1,0 +1,57 @@
+ext {
+  //// versions for dependencies
+
+  versions = [
+      error_prone_annotations: '2.0.4',
+      guava: '19.0-rc1',
+      jool: '0.9.6',
+      joor: '0.9.5',
+      jsr305: '3.0.0',
+  ]
+  test_versions = [
+      junit: '4.12',
+      mockito: '2.0.31-beta',
+  ]
+  benchmark_versions = [
+      java_object_layout: '0.3.2',
+  ]
+  plugin_versions = [
+      checkstyle: '6.7',
+      coveralls: '2.4.0',
+      error_prone: '0.0.7.1',
+      versions: '0.11.3',
+      semantic_versioning: '1.1.0',
+      stats: '0.1.5',
+      nexus: '2.3.1',
+  ]
+
+  //// dependencies
+
+  libraries = [
+      error_prone_annotations: "com.google.errorprone:error_prone_annotations:${versions.error_prone_annotations}",
+      guava: "com.google.guava:guava:${versions.guava}",
+      jool: "org.jooq:jool:${versions.jool}",
+      joor: "org.jooq:joor:${versions.joor}",
+      jsr305: "com.google.code.findbugs:jsr305:${versions.jsr305}",
+  ]
+  test_libraries = [
+      junit: "junit:junit:${test_versions.junit}",
+      mockito: dependencies.create("org.mockito:mockito-core:${test_versions.mockito}") {
+        exclude group: 'org.hamcrest'
+      },
+  ]
+  benchmark_libraries = [
+      java_object_layout: "org.openjdk.jol:jol-cli:${benchmark_versions.java_object_layout}"
+  ]
+  gradle_plugins = [
+      checkstyle: dependencies.create("com.puppycrawl.tools:checkstyle:${plugin_versions.checkstyle}") {
+        transitive = false
+      },
+      coveralls: "org.kt3k.gradle.plugin:coveralls-gradle-plugin:${plugin_versions.coveralls}",
+      error_prone: "net.ltgt.gradle:gradle-errorprone-plugin:${plugin_versions.error_prone}",
+      semantic_versioning: "io.ehdev:gradle-semantic-versioning:${plugin_versions.semantic_versioning}",
+      stats: "org.kordamp.gradle:stats-gradle-plugin:${plugin_versions.stats}",
+      versions: "com.github.ben-manes:gradle-versions-plugin:${plugin_versions.versions}",
+      nexus: "com.bmuschko:gradle-nexus-plugin:${plugin_versions.nexus}",
+  ]
+}

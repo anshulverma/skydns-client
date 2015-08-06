@@ -1,0 +1,43 @@
+apply plugin: 'com.bmuschko.nexus'
+
+if (System.env.'nexusUsername') {
+  project.ext {
+    nexusUsername = System.env.'nexusUsername'
+    nexusPassword = System.env.'nexusPassword'
+  }
+}
+
+modifyPom {
+  project {
+    name 'Skydns client'
+    description 'A client library to talk to skydns for Java 8+'
+    url 'https://github.com/anshulverma/skydns-client'
+    inceptionYear '2015'
+
+    scm {
+      url 'https://github.com/anshulverma/skydns-client'
+      connection 'scm:https://anshulverma@github.com/anshulverma/skydns-client.git'
+      developerConnection 'scm:git://github.com/anshulverma/skydns-client.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'anshul'
+        name 'Anshul Verma'
+        email 'anshul.verma86@gmail.com'
+        roles {
+          role 'owner'
+          role 'developer'
+        }
+      }
+    }
+  }
+}

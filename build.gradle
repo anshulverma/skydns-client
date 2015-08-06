@@ -1,0 +1,50 @@
+buildscript {
+  apply from: "${rootDir}/gradle/dependencies.gradle"
+
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2' }
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    gradle_plugins.each { name, dependency -> classpath dependency }
+  }
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.github.ethankhall.semantic-versioning'
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+apply from: "${rootDir}/gradle/dependencies.gradle"
+apply from: "${rootDir}/gradle/code_quality.gradle"
+apply from: "${rootDir}/gradle/object_layout.gradle"
+apply from: "${rootDir}/gradle/publish.gradle"
+apply from: "${rootDir}/gradle/reports.gradle"
+
+dependencies {
+  compile libraries.jsr305
+
+  testCompile libraries.guava
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+group = 'com.anshul.skydns'
+version.with {
+  major = 0 // incompatible API changes
+  minor = 0 // backwards-compatible additions
+  patch = 1 // backwards-compatible bug fixes
+  releaseBuild = rootProject.hasProperty('release')
+}
+archivesBaseName = 'skydns-client'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.5'
+}
