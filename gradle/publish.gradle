@@ -1,9 +1,9 @@
 apply plugin: 'com.bmuschko.nexus'
 
-if (System.env.'nexusUsername') {
+if (System.env.'SONATYPE_USERNAME') {
   project.ext {
-    nexusUsername = System.env.'nexusUsername'
-    nexusPassword = System.env.'nexusPassword'
+    nexusUsername = System.env.'SONATYPE_USERNAME'
+    nexusPassword = System.env.'SONATYPE_PASSWORD'
   }
 }
 

@@ -18,7 +18,8 @@ script:
 - JAVA_OPTS="-Xmx384m -XX:+UseG1GC -XX:SoftRefLRUPolicyMSPerMB=0 -noverify" ./gradlew check
 
 after_success:
-- "./gradlew coveralls uploadArchives -PnexusUsername='${SONATYPE_USERNAME}' -PnexusPassword='${SONATYPE_PASSWORD}'"
+- "./gradlew coveralls"
+- "./gradlew uploadArchives"
 
 matrix:
   fast_finish: true
