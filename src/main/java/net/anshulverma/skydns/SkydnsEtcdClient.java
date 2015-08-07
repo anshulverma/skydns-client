@@ -28,7 +28,7 @@ import net.anshulverma.skydns.error.RemoteConnectionException;
  */
 public class SkydnsEtcdClient {
 
-  private static final StringBuilder SKYDNS_ROOT_KEY = new StringBuilder("skydns/");
+  private static final String SKYDNS_ROOT_KEY = "skydns/";
 
   private final EtcdClient etcdClient;
 
@@ -46,6 +46,6 @@ public class SkydnsEtcdClient {
   }
 
   private String path(String key) {
-    return SKYDNS_ROOT_KEY.append(key).toString();
+    return SKYDNS_ROOT_KEY + key;
   }
 }
