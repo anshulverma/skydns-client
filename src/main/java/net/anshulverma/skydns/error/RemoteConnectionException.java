@@ -13,23 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.anshulverma.skydns;
-
-import net.anshulverma.skydns.error.DeserializationException;
-import net.anshulverma.skydns.error.RemoteConnectionException;
+package net.anshulverma.skydns.error;
 
 /**
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
-public class SkydnsClient {
+public class RemoteConnectionException extends Exception {
 
-  private SkydnsConnection connection;
-
-  public SkydnsClient(SkydnsConnection connection) {
-    this.connection = connection;
-  }
-
-  public SkydnsConfig getConfig() throws DeserializationException, RemoteConnectionException {
-    return connection.get("config", SkydnsConfig.class);
+  public RemoteConnectionException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

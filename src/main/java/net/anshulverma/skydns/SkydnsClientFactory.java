@@ -15,21 +15,18 @@
  */
 package net.anshulverma.skydns;
 
-import net.anshulverma.skydns.error.DeserializationException;
-import net.anshulverma.skydns.error.RemoteConnectionException;
-
 /**
+ * A factory class to get an instance of {@link net.anshulverma.skydns.SkydnsClient} for a particular skydns endpoint
+ * and a particular domain.
+ *
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
-public class SkydnsClient {
+public class SkydnsClientFactory {
 
-  private SkydnsConnection connection;
-
-  public SkydnsClient(SkydnsConnection connection) {
-    this.connection = connection;
-  }
-
-  public SkydnsConfig getConfig() throws DeserializationException, RemoteConnectionException {
-    return connection.get("config", SkydnsConfig.class);
+  public static SkydnsClient newClient(String... endpoints) {
+    SkydnsConnection connection = SkydnsConnection.builder()
+                                                  .endpoints(endpoints)
+                                                  .build();
+    return new SkydnsClient(connection);
   }
 }

@@ -7,10 +7,14 @@ ext {
       jool: '0.9.6',
       joor: '0.9.5',
       jsr305: '3.0.0',
+      lombok: '1.16.4',
+      etcd: '2.7.0',
+      jackson: '2.6.0'
   ]
   test_versions = [
       junit: '4.12',
       mockito: '2.0.31-beta',
+      commons_io: '2.4'
   ]
   benchmark_versions = [
       java_object_layout: '0.3.2',
@@ -33,12 +37,20 @@ ext {
       jool: "org.jooq:jool:${versions.jool}",
       joor: "org.jooq:joor:${versions.joor}",
       jsr305: "com.google.code.findbugs:jsr305:${versions.jsr305}",
+      lombok: "org.projectlombok:lombok:${versions.lombok}",
+      etcd: "org.mousio:etcd4j:${versions.etcd}",
+      jackson: [
+          "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
+          "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
+          "com.fasterxml.jackson.core:jackson-annotations:${versions.jackson}"
+      ]
   ]
   test_libraries = [
       junit: "junit:junit:${test_versions.junit}",
       mockito: dependencies.create("org.mockito:mockito-core:${test_versions.mockito}") {
         exclude group: 'org.hamcrest'
       },
+      commons_io: "commons-io:commons-io:${test_versions.commons_io}"
   ]
   benchmark_libraries = [
       java_object_layout: "org.openjdk.jol:jol-cli:${benchmark_versions.java_object_layout}"

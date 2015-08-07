@@ -15,6 +15,7 @@ buildscript {
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.github.ethankhall.semantic-versioning'
 apply plugin: 'java'
+apply plugin: 'idea'
 
 repositories {
   mavenCentral()
@@ -29,7 +30,13 @@ apply from: "${rootDir}/gradle/reports.gradle"
 
 dependencies {
   compile libraries.jsr305
+  compile libraries.lombok
+  compile libraries.etcd
+  libraries.jackson.each { compile it }
 
+  testCompile test_libraries.junit
+  testCompile test_libraries.mockito
+  testCompile test_libraries.commons_io
   testCompile libraries.guava
 }
 

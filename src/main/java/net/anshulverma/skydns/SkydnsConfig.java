@@ -15,21 +15,37 @@
  */
 package net.anshulverma.skydns;
 
-import net.anshulverma.skydns.error.DeserializationException;
-import net.anshulverma.skydns.error.RemoteConnectionException;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
+ * Keeps track of the connection parameters (like endpoint and domain) for skydns.
+ *
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
-public class SkydnsClient {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SkydnsConfig {
 
-  private SkydnsConnection connection;
+  public String dns_addr;
 
-  public SkydnsClient(SkydnsConnection connection) {
-    this.connection = connection;
-  }
+  public String hostmaster;
 
-  public SkydnsConfig getConfig() throws DeserializationException, RemoteConnectionException {
-    return connection.get("config", SkydnsConfig.class);
-  }
+  public String domain;
+
+  public List<String> nameservers;
+
+  @JsonProperty("ttl")
+  public long timeToLive;
+
 }

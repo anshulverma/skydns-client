@@ -79,7 +79,8 @@ tasks.withType(Test) {
 }
 
 tasks.withType(Checkstyle) {
-  enabled = System.properties.containsKey('checkstyle')
+  enabled = !System.properties.containsKey('checkstyle') \
+            || !'disable'.equals(System.properties.getProperty('checkstyle'))
   group = 'Checkstyle'
   doLast {
     ant.xslt(in: "${buildDir}/reports/checkstyle/main.xml",
