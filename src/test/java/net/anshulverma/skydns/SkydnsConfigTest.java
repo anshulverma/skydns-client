@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.collect.Lists;
-import net.anshulverma.skydns.error.DeserializationException;
+import net.anshulverma.skydns.error.SerializationException;
 import net.anshulverma.skydns.error.RemoteConnectionException;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SkydnsClientTest {
+public class SkydnsConfigTest {
 
   @Mock
   private SkydnsEtcdClient mockEtcdClient;
@@ -41,11 +41,11 @@ public class SkydnsClientTest {
 
   @Before
   public void setUp() throws Exception {
-    skydnsClient = new SkydnsClient(new SkydnsConnection(mockEtcdClient));
+    skydnsClient = new SkydnsClient(new SkydnsConnection(mockEtcdClient), null);
   }
 
   @Test
-  public void testSkydnsEmptyConfigRetrieval() throws RemoteConnectionException, DeserializationException {
+  public void testSkydnsEmptyConfigRetrieval() throws RemoteConnectionException, SerializationException {
     when(mockEtcdClient.get(anyString())).thenReturn("{}");
     SkydnsConfig config = skydnsClient.getConfig();
     Assert.assertEquals("skydns client returned unexpected configuration",
@@ -60,11 +60,13 @@ public class SkydnsClientTest {
     when(mockEtcdClient.get(anyString())).thenReturn(configJson);
     SkydnsConfig config = skydnsClient.getConfig();
     Assert.assertEquals("skydns client returned unexpected configuration",
-                        new SkydnsConfig("192.168.10.12:53",
-                                         "hostmaster@example.com",
-                                         "example.com.",
-                                         Lists.newArrayList("8.8.8.8:53", "4.4.4.4:53"),
-                                         3600),
+                        SkydnsConfig.builder()
+                                    .dnsAddress("192.168.10.12:53")
+                                    .hostmaster("hostmaster@example.com")
+                                    .domain("example.com.")
+                                    .nameservers(Lists.newArrayList("8.8.8.8:53", "4.4.4.4:53"))
+                                    .timeToLive(3600)
+                                    .build(),
                         config);
   }
 }

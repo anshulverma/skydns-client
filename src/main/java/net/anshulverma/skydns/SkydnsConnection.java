@@ -18,9 +18,10 @@ package net.anshulverma.skydns;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mousio.etcd4j.EtcdClient;
-import net.anshulverma.skydns.error.DeserializationException;
+import net.anshulverma.skydns.error.SerializationException;
 import net.anshulverma.skydns.error.RemoteConnectionException;
 
 /**
@@ -42,26 +43,44 @@ public class SkydnsConnection {
     return new SkydnsConnectionBuilder();
   }
 
-  public <T> T get(String key, Class<T> clazz) throws RemoteConnectionException, DeserializationException {
+  public <T> T get(String key, Class<T> clazz) throws RemoteConnectionException, SerializationException {
     String value = client.get(key);
+    return deserialize(value, clazz);
+  }
+
+  public <T> T set(String key, T value) throws RemoteConnectionException, SerializationException {
+    String response = client.set(key, serialize(value));
+    return deserialize(response, value.getClass());
+  }
+
+  private String serialize(Object value) throws SerializationException {
     try {
-      return OBJECT_MAPPER.readValue(value, clazz);
+      return OBJECT_MAPPER.writeValueAsString(value);
+    } catch (JsonProcessingException e) {
+      throw new SerializationException("unable to write value for type: " + value.getClass().getCanonicalName(), e);
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private <T> T deserialize(String value, Class clazz) throws SerializationException {
+    try {
+      return (T) OBJECT_MAPPER.readValue(value, clazz);
     } catch (IOException e) {
-      throw new DeserializationException("read error for type: " + clazz.getCanonicalName() + " -- value: " + value, e);
+      throw new SerializationException("read error for type: " + clazz.getCanonicalName() + " -- value: " + value, e);
     }
   }
 
   static class SkydnsConnectionBuilder {
 
-    private String[] endpoints;
+    private String[] etcdMachines;
 
-    public SkydnsConnectionBuilder endpoints(String[] endpoints) {
-      this.endpoints = endpoints;
+    public SkydnsConnectionBuilder endpoints(String[] etcdMachines) {
+      this.etcdMachines = etcdMachines;
       return this;
     }
 
     public SkydnsConnection build() {
-      EtcdClient client = new EtcdClient(Arrays.stream(endpoints)
+      EtcdClient client = new EtcdClient(Arrays.stream(etcdMachines)
                                                .map(URI::create)
                                                .toArray(URI[]::new));
       return new SkydnsConnection(new SkydnsEtcdClient(client));

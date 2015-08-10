@@ -33,6 +33,8 @@ dependencies {
   compile libraries.lombok
   compile libraries.etcd
   libraries.jackson.each { compile it }
+  compile libraries.guava
+  compile libraries.commonsLang
 
   testCompile test_libraries.junit
   testCompile test_libraries.mockito

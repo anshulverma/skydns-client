@@ -13,42 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.anshulverma.skydns;
+package net.anshulverma.skydns.service;
 
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
+import net.anshulverma.skydns.SkydnsHost;
 
 /**
- * Keeps track of the connection parameters (like endpoint and domain) for skydns.
- *
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@EqualsAndHashCode
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class SkydnsConfig {
+@Getter
+@Builder
+public class ServiceRegistry {
 
-  @JsonProperty("dns_addr")
-  public String dnsAddress;
+  private ServiceDomain domainName;
 
-  public String hostmaster;
-
-  public String domain;
-
-  public List<String> nameservers;
-
-  @JsonProperty("ttl")
-  public long timeToLive;
+  private SkydnsHost skydnsHost;
 
 }

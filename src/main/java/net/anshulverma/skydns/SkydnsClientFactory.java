@@ -15,6 +15,10 @@
  */
 package net.anshulverma.skydns;
 
+import net.anshulverma.skydns.error.RemoteConnectionException;
+import net.anshulverma.skydns.error.SerializationException;
+import net.anshulverma.skydns.service.ServiceRegistrator;
+
 /**
  * A factory class to get an instance of {@link net.anshulverma.skydns.SkydnsClient} for a particular skydns endpoint
  * and a particular domain.
@@ -23,10 +27,11 @@ package net.anshulverma.skydns;
  */
 public class SkydnsClientFactory {
 
-  public static SkydnsClient newClient(String... endpoints) {
+  public static SkydnsClient newClient(String... etcdMachines) throws RemoteConnectionException, SerializationException {
     SkydnsConnection connection = SkydnsConnection.builder()
-                                                  .endpoints(endpoints)
+                                                  .endpoints(etcdMachines)
                                                   .build();
-    return new SkydnsClient(connection);
+    ServiceRegistrator registrator = new ServiceRegistrator(connection, connection.get("config", SkydnsConfig.class));
+    return new SkydnsClient(connection, registrator);
   }
 }

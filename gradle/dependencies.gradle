@@ -9,7 +9,8 @@ ext {
       jsr305: '3.0.0',
       lombok: '1.16.4',
       etcd: '2.7.0',
-      jackson: '2.6.0'
+      jackson: '2.6.0',
+      commonsLang: '3.4'
   ]
   test_versions = [
       junit: '4.12',
@@ -43,7 +44,8 @@ ext {
           "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
           "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
           "com.fasterxml.jackson.core:jackson-annotations:${versions.jackson}"
-      ]
+      ],
+      commonsLang: "org.apache.commons:commons-lang3:${versions.commonsLang}"
   ]
   test_libraries = [
       junit: "junit:junit:${test_versions.junit}",

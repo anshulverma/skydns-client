@@ -15,21 +15,29 @@
  */
 package net.anshulverma.skydns;
 
-import net.anshulverma.skydns.error.DeserializationException;
 import net.anshulverma.skydns.error.RemoteConnectionException;
+import net.anshulverma.skydns.error.SerializationException;
+import net.anshulverma.skydns.service.ServiceRegistrator;
+import net.anshulverma.skydns.service.ServiceRegistry;
 
 /**
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
 public class SkydnsClient {
 
-  private SkydnsConnection connection;
+  private final SkydnsConnection connection;
+  private final ServiceRegistrator registrator;
 
-  public SkydnsClient(SkydnsConnection connection) {
+  public SkydnsClient(SkydnsConnection connection, ServiceRegistrator registrator) {
     this.connection = connection;
+    this.registrator = registrator;
   }
 
-  public SkydnsConfig getConfig() throws DeserializationException, RemoteConnectionException {
+  public SkydnsConfig getConfig() throws SerializationException, RemoteConnectionException {
     return connection.get("config", SkydnsConfig.class);
+  }
+
+  public ServiceRegistry register(SkydnsHost skydnsHost, String... names) throws SerializationException, RemoteConnectionException {
+    return registrator.register(skydnsHost, names);
   }
 }

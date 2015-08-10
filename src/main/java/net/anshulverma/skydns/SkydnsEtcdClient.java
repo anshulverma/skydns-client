@@ -45,6 +45,15 @@ public class SkydnsEtcdClient {
     }
   }
 
+  public String set(String key, String value) throws RemoteConnectionException {
+    try {
+      EtcdResponsePromise<EtcdKeysResponse> promise = etcdClient.post(path(key), value).send();
+      return promise.get().node.value;
+    } catch (IOException | EtcdException | TimeoutException e) {
+      throw new RemoteConnectionException("unable to set value for key '" + path(key) + "'", e);
+    }
+  }
+
   private String path(String key) {
     return SKYDNS_ROOT_KEY + key;
   }

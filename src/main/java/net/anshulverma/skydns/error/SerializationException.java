@@ -18,9 +18,9 @@ package net.anshulverma.skydns.error;
 /**
  * @author anshul.verma86@gmail.com (Anshul Verma)
  */
-public class DeserializationException extends Exception {
+public class SerializationException extends Exception {
 
-  public DeserializationException(String message, Throwable cause) {
+  public SerializationException(String message, Throwable cause) {
     super(message, cause);
   }
 }

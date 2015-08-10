@@ -15,13 +15,13 @@
  */
 package net.anshulverma.skydns;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -33,22 +33,22 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @EqualsAndHashCode
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SkydnsConfig {
+@Getter
+@Builder
+public class SkydnsHost {
 
-  @JsonProperty("dns_addr")
-  public String dnsAddress;
+  private String host;
 
-  public String hostmaster;
+  private int port;
 
-  public String domain;
+  private int priority;
 
-  public List<String> nameservers;
+  private int weight;
 
   @JsonProperty("ttl")
-  public long timeToLive;
+  private int timeToLive;
 
 }
