@@ -27,6 +27,7 @@ apply from: "${rootDir}/gradle/code_quality.gradle"
 apply from: "${rootDir}/gradle/object_layout.gradle"
 apply from: "${rootDir}/gradle/publish.gradle"
 apply from: "${rootDir}/gradle/reports.gradle"
+apply from: "${rootDir}/gradle/sonar.gradle"
 
 dependencies {
   compile libraries.jsr305

@@ -1,0 +1,18 @@
+apply plugin: "sonar-runner"
+
+sonarRunner {
+  ext {
+    sonarHost = System.properties.getProperty('sonarHost', 'localhost:9000')
+    sonarDbHost = System.properties.getProperty('sonarDbHost', 'localhost')
+    sonarDbUsername = System.properties.getProperty('sonarDbUsername', 'sonar')
+    sonarDbPassword = System.properties.getProperty('sonarDbPassword', 'sonar')
+  }
+
+  sonarProperties {
+    property 'sonar.host.url', "http://${sonarHost}"
+    property "sonar.jdbc.url", "jdbc:postgresql://${sonarDbHost}/sonar"
+    property "sonar.jdbc.driverClassName", "org.postgresql.Driver"
+    property "sonar.jdbc.username", sonarDbUsername
+    property "sonar.jdbc.password", sonarDbPassword
+  }
+}
