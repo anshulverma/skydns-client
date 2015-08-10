@@ -47,9 +47,9 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 group = 'net.anshulverma.skydns'
 version.with {
-  major = 0 // incompatible API changes
+  major = 1 // incompatible API changes
   minor = 0 // backwards-compatible additions
-  patch = 2 // backwards-compatible bug fixes
+  patch = 0 // backwards-compatible bug fixes
   releaseBuild = rootProject.hasProperty('release')
 }
 archivesBaseName = 'skydns-client'
