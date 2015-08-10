@@ -7,7 +7,7 @@ task testReport(type: TestReport, group: 'Build') {
 }
 
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
-  description = 'Generates an aggregate report from all subprojects'
+  description = 'Generates an aggregate report'
   dependsOn(test)
 
   additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
@@ -29,6 +29,10 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
       fileTree(dir: it, exclude: [ ])
     })
   }
+
+  excludes  = [
+      "net.anshulverma.skydns.SkydnsClientFactory"
+  ]
 }
 
 coveralls {
