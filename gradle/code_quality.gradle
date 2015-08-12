@@ -8,14 +8,6 @@ apply plugin: 'jacoco'
 apply plugin: 'java'
 apply plugin: 'pmd'
 
-configurations {
-  checkstyleConfig
-}
-
-dependencies {
-  checkstyleConfig gradle_plugins.checkstyle
-}
-
 tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
   options.compilerArgs << '-Xlint:all'
@@ -25,9 +17,10 @@ javadoc.options.links('http://docs.oracle.com/javase/8/docs/api/');
 
 checkstyle {
   showViolations = true
-  sourceSets = [sourceSets.main]
+  ignoreFailures = false
+  sourceSets = [sourceSets.main, sourceSets.test]
   toolVersion = "${plugin_versions.checkstyle}"
-  config = resources.text.fromArchiveEntry(configurations.checkstyleConfig, 'google_checks.xml')
+  configFile = "$rootDir/config/checkstyle/checkstyle.xml" as File
 }
 
 findbugs {

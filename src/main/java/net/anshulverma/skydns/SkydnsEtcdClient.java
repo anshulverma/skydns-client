@@ -1,27 +1,31 @@
 /**
- * Copyright 2015 Anshul Verma. All Rights Reserved.
+ * Copyright © 2015 Anshul Verma. All Rights Reserved.
  *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package net.anshulverma.skydns;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
+import net.anshulverma.skydns.error.RemoteConnectionException;
 import mousio.etcd4j.EtcdClient;
 import mousio.etcd4j.promises.EtcdResponsePromise;
 import mousio.etcd4j.responses.EtcdException;
 import mousio.etcd4j.responses.EtcdKeysResponse;
-import net.anshulverma.skydns.error.RemoteConnectionException;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author anshul.verma86@gmail.com (Anshul Verma)
@@ -36,6 +40,11 @@ public class SkydnsEtcdClient {
     this.etcdClient = etcdClient;
   }
 
+  /**
+   * Get value of a node under the skydns root directory in etcd.
+   *
+   * {@inheritDoc}
+   */
   public String get(String key) throws RemoteConnectionException {
     try {
       EtcdResponsePromise<EtcdKeysResponse> promise = etcdClient.get(path(key)).send();
@@ -45,6 +54,11 @@ public class SkydnsEtcdClient {
     }
   }
 
+  /**
+   * Set value for a node under the skydns root directory in etcd.
+   *
+   * {@inheritDoc}
+   */
   public String set(String key, String value) throws RemoteConnectionException {
     try {
       EtcdResponsePromise<EtcdKeysResponse> promise = etcdClient.post(path(key), value).send();
