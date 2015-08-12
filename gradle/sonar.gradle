@@ -2,10 +2,10 @@ apply plugin: "sonar-runner"
 
 sonarRunner {
   ext {
-    sonarHost = System.properties.getProperty('sonarHost', 'localhost:9000')
-    sonarDbHost = System.properties.getProperty('sonarDbHost', 'localhost')
-    sonarDbUsername = System.properties.getProperty('sonarDbUsername', 'sonar')
-    sonarDbPassword = System.properties.getProperty('sonarDbPassword', 'sonar')
+    sonarHost = project.properties.get('sonarHost', 'localhost:9000')
+    sonarDbHost = project.properties.get('sonarDbHost', 'localhost')
+    sonarDbUsername = project.properties.get('sonarDbUsername', 'sonar')
+    sonarDbPassword = project.properties.get('sonarDbPassword', 'sonar')
   }
 
   sonarProperties {
