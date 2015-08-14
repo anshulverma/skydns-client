@@ -4,3 +4,7 @@
 [![Build Status](https://travis-ci.org/anshulverma/skydns-client.svg?branch=master)](https://travis-ci.org/anshulverma/skydns-client)
 
 Library to interact with skydns.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/anshulverma/skydns-client/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
